@@ -411,3 +411,95 @@
     min-height: auto;
   }
 }
+
+@media (max-width: 900px) {
+  .tutorial-programmes-page .header-note {
+    white-space: normal;
+  }
+
+  .tp-support {
+    padding-top: 24px;
+  }
+
+  .tp-support-shell {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .tp-support-intro,
+  .tp-support-panel {
+    padding: 28px 22px;
+  }
+
+  .tp-support-intro h1,
+  .tp-support-panel h2,
+  .tp-overview h2,
+  .tp-main-pathway h2,
+  .tp-addons h2 {
+    font-size: 23px;
+  }
+
+  .tp-support-item {
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .tp-support-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 24px;
+  }
+
+  .tp-support-copy h3 {
+    padding: 12px 14px 0;
+    font-size: 16px;
+  }
+
+  .tp-support-copy p {
+    padding: 0 14px 12px;
+  }
+
+  .tp-overview-flow {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 14px;
+  }
+
+  .tp-overview-node {
+    width: min(230px, 78vw);
+    height: min(230px, 78vw);
+  }
+
+  .tp-overview-node h3 {
+    font-size: 18px;
+  }
+
+  .tp-overview-node p {
+    font-size: 12px;
+  }
+
+  .tp-cards-two,
+  .tp-cards-three,
+  .tp-method-panel {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .tp-card-main,
+  .tp-card-addon {
+    padding: 24px 20px;
+  }
+
+  .tp-mini-badges {
+    grid-template-columns: 1fr;
+  }
+
+  .tp-method h2 {
+    font-size: 28px;
+  }
+
+  .tp-method-panel {
+    padding: 26px 22px;
+    row-gap: 22px;
+  }
+}

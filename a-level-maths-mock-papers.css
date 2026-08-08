@@ -42,17 +42,6 @@
   height: auto;
 }
 
-.mock-cover-card::after {
-  content: "";
-  position: absolute;
-  left: 80px;
-  top: 178px;
-  width: 54px;
-  height: 21px;
-  background: rgb(183, 183, 183);
-  border-radius: 2px;
-}
-
 .mock-intro {
   max-width: 640px;
   padding: 6px 0 0;
@@ -275,4 +264,81 @@
 
 .mock-cta-copy .btn {
   margin-top: 22px;
+}
+
+@media (max-width: 900px) {
+  .mock-page .header-note {
+    white-space: normal;
+  }
+
+  .mock-hero {
+    padding: 28px 0 42px;
+  }
+
+  .mock-hero-shell,
+  .mock-series-grid,
+  .mock-samples,
+  .mock-review-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .mock-hero-shell {
+    gap: 28px;
+    min-height: 0;
+  }
+
+  .mock-cover-card {
+    width: min(250px, 78vw);
+    margin: 0 auto;
+  }
+
+  .mock-intro h1 {
+    font-size: 34px;
+  }
+
+  .mock-lead,
+  .mock-points {
+    font-size: 14px;
+    line-height: 1.75;
+  }
+
+  .mock-actions {
+    flex-direction: column;
+  }
+
+  .mock-actions .btn {
+    width: 100%;
+  }
+
+  .mock-series-heading h2 {
+    font-size: 32px;
+  }
+
+  .mock-series-heading p,
+  .mock-series-panel p,
+  .mock-series-panel-large p {
+    font-size: 16px;
+  }
+
+  .mock-series-panel,
+  .mock-series-panel-large,
+  .mock-series-panel-dark {
+    min-height: 0;
+    padding: 26px 22px;
+    border-radius: 24px;
+  }
+
+  .mock-series-panel h3,
+  .mock-series-panel-large h3,
+  .mock-series-panel-dark h3 {
+    font-size: 23px;
+  }
+
+  .mock-review-card {
+    padding: 12px;
+  }
+
+  .mock-cta-shell {
+    padding: 30px 22px;
+  }
 }

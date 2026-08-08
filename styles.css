@@ -2066,7 +2066,7 @@ button {
   animation: none;
 }
 
-@media (max-width: 0px) {
+@media (max-width: 900px) {
   .programmes,
   .results-grid,
   .contact-grid {
@@ -2082,7 +2082,11 @@ button {
   }
 }
 
-@media (max-width: 0px) {
+@media (max-width: 900px) {
+  body {
+    min-width: 0;
+  }
+
   .container {
     width: min(calc(100% - 28px), var(--max));
   }
@@ -2133,5 +2137,281 @@ button {
 
   .submit-row .btn {
     width: 100%;
+  }
+}
+
+@media (max-width: 900px) {
+  .site-header {
+    position: relative;
+  }
+
+  .header-inner {
+    min-height: 0;
+    padding: 14px 0 16px;
+  }
+
+  .brand,
+  .site-nav {
+    position: static;
+  }
+
+  .brand {
+    width: auto;
+    margin-bottom: 12px;
+  }
+
+  .brand img {
+    width: 42px;
+    height: 48px;
+  }
+
+  .site-nav {
+    width: 100%;
+    align-items: stretch;
+    gap: 9px;
+  }
+
+  .site-nav ul {
+    display: flex;
+    gap: 8px 14px;
+    flex-wrap: wrap;
+  }
+
+  .site-nav a {
+    font-size: 13px;
+    line-height: 1.25;
+  }
+
+  .header-note {
+    width: 100%;
+    font-size: 9px;
+    line-height: 1.35;
+  }
+
+  .hero {
+    height: auto;
+    min-height: 0;
+    padding: 24px 0;
+  }
+
+  .hero-card {
+    width: 100%;
+    min-height: 0;
+    padding: 26px 18px 22px;
+  }
+
+  .hero-title {
+    font-size: 19px;
+    line-height: 1.55;
+  }
+
+  .hero-subtitle,
+  .hero-body {
+    max-width: none;
+    font-size: 13px;
+    line-height: 1.65;
+  }
+
+  .stats {
+    height: auto;
+    padding: 30px 0 34px;
+  }
+
+  .stats-grid {
+    gap: 26px 10px;
+  }
+
+  .stat-value {
+    font-size: 27px;
+  }
+
+  .stat-copy {
+    max-width: 150px;
+    font-size: 13px;
+  }
+
+  .home-programmes-section {
+    padding: 48px 0;
+  }
+
+  .programmes {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 18px;
+  }
+
+  .programmes-copy,
+  .programme-card--tmua,
+  .programme-card--sat {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .programmes-copy {
+    padding-top: 0;
+  }
+
+  .programmes-copy .section-title,
+  .programmes-copy p,
+  .programmes-cta,
+  .programme-card,
+  .programme-card--admissions {
+    width: 100%;
+  }
+
+  .programmes-copy .section-title {
+    margin-bottom: 16px;
+    font-size: 31px;
+  }
+
+  .programmes-copy p {
+    margin-bottom: 20px;
+    font-size: 15px;
+  }
+
+  .programme-card,
+  .programme-card--admissions {
+    min-height: 0;
+    padding: 26px 22px 24px;
+  }
+
+  .programme-card h4 {
+    font-size: 22px;
+  }
+
+  .programme-card p {
+    font-size: 15px;
+  }
+
+  .results {
+    padding: 34px 0 40px;
+  }
+
+  .results .container {
+    width: min(calc(100% - 28px), var(--max));
+  }
+
+  .results-grid {
+    width: 100%;
+    min-height: 0;
+    gap: 28px;
+  }
+
+  .big-stats {
+    width: 100%;
+    padding-top: 0;
+    justify-self: center;
+    text-align: center;
+  }
+
+  .big-stats .section-title {
+    width: 100%;
+    font-size: 30px;
+  }
+
+  .big-stat-number {
+    font-size: 74px;
+  }
+
+  .testimonial-shell,
+  .testimonial-stage,
+  .testimonial-intro,
+  .testimonial-quote,
+  .testimonial-name {
+    width: 100%;
+  }
+
+  .testimonial-shell {
+    min-height: 0;
+    padding-top: 0;
+  }
+
+  .testimonial-stage {
+    height: 360px;
+  }
+
+  .testimonial-quote {
+    margin-left: 0;
+    font-size: 18px;
+    line-height: 1.55;
+  }
+
+  .testimonial-rule,
+  .testimonial-name {
+    margin-left: 0;
+  }
+
+  .testimonial-controls {
+    min-height: 0;
+    margin-top: 0;
+    padding-top: 12px;
+  }
+
+  .dots {
+    margin-left: 0;
+  }
+
+  .testimonial-progress {
+    margin-left: 0;
+  }
+
+  .testimonial-controls .btn {
+    position: static;
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .contact {
+    padding: 46px 0;
+  }
+
+  .contact-grid {
+    gap: 28px;
+  }
+
+  .contact-panel {
+    padding: 22px;
+  }
+
+  .site-footer {
+    text-align: center;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .about-hero-band {
+    padding: 24px 0 36px;
+  }
+
+  .about-hero-card,
+  .qualifications-grid,
+  .philosophy-grid,
+  .about-copy-grid,
+  .publications-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-hero-card {
+    width: 100%;
+  }
+
+  .about-hero-copy {
+    padding: 30px 24px;
+  }
+
+  .about-hero-copy h1 {
+    font-size: 36px;
+  }
+
+  .about-hero-photo {
+    min-height: 0;
+  }
+
+  .about-hero-photo img {
+    height: auto;
+    object-fit: contain;
   }
 }

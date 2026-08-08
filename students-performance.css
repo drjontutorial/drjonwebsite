@@ -235,3 +235,92 @@
   color: rgb(91, 77, 67);
   font: 400 14px/1.7 var(--font-sans);
 }
+
+@media (max-width: 900px) {
+  .students-page .header-note {
+    white-space: normal;
+  }
+
+  .sp-hero {
+    padding: 24px 0 30px;
+  }
+
+  .sp-hero-shell {
+    min-height: 0;
+    padding-top: 0;
+  }
+
+  .sp-hero-card {
+    left: auto;
+    width: 100%;
+    padding: 28px 22px;
+  }
+
+  .sp-hero-card h1,
+  .sp-heading h2 {
+    font-size: 30px;
+  }
+
+  .sp-results-grid,
+  .sp-logo-grid,
+  .sp-diagram-shell,
+  .sp-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .sp-results-grid {
+    gap: 14px;
+    margin-top: 24px;
+  }
+
+  .sp-result {
+    min-height: 0;
+    padding: 24px 18px;
+  }
+
+  .sp-number {
+    font-size: 58px;
+  }
+
+  .sp-map {
+    padding-bottom: 42px;
+  }
+
+  .sp-map .container {
+    width: 100%;
+  }
+
+  .sp-map-frame {
+    overflow-x: auto;
+  }
+
+  .sp-map-frame img {
+    width: 980px;
+    max-width: none;
+  }
+
+  .sp-map-overlay {
+    position: static;
+    transform: none;
+    width: min(calc(100% - 28px), 560px);
+    max-width: none;
+    margin: 12px auto 0;
+  }
+
+  .sp-universities {
+    padding: 46px 0 50px;
+  }
+
+  .sp-logo-card {
+    min-height: 104px;
+  }
+
+  .sp-diagram-shell {
+    gap: 18px;
+  }
+
+  .sp-diagram-card {
+    min-height: 0;
+    padding: 28px 22px;
+  }
+}
