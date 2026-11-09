@@ -156,7 +156,9 @@
     } else {
       const course = courses.find(c => c.slug === r.course);
       if (!course) {
-        html = topBar(student) + '<h1>Not available</h1><p>This course has not been assigned to you. <a href="/notes-solutions/">Back to your Solution Bank</a></p>';
+        // Printed QR codes and old links may not match a course key (AS/A2
+        // slugs collide), so anything unknown just opens the student's home.
+        html = renderHome(student, courses);
       } else if (!r.exercise) {
         html = renderCourse(student, course);
       } else {
