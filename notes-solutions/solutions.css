@@ -33,3 +33,20 @@
 .bank-pagination { display: flex; justify-content: space-between; gap: 20px; margin-top: 30px; flex-wrap: wrap; }
 .solutions-course h2 { font: 700 22px/1.5 var(--font-serif); }
 [hidden] { display: none !important; }
+/* Student accounts (Firebase) */
+.bank-input { width: 100%; padding: 12px; margin-top: 8px; border: 1px solid var(--accent); border-radius: 5px; font: inherit; box-sizing: border-box; }
+.bank-remember { display: flex !important; align-items: center; gap: 8px; font-size: 14px; }
+#bank-login button:disabled { opacity: .6; cursor: default; }
+.bank-main { padding-block: 40px 64px; }
+.bank-userbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; font-size: 14px; color: var(--muted); padding-bottom: 14px; margin-bottom: 26px; border-bottom: 1px solid #b8926355; }
+.bank-logout { background: none; border: 1px solid var(--accent); color: var(--ink); padding: 6px 14px; border-radius: 6px; cursor: pointer; font: inherit; }
+.bank-course-grid { margin-top: 28px; }
+.bank-course-card { display: block; color: inherit; text-decoration: none; transition: transform .15s ease, box-shadow .15s ease; }
+.bank-course-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px #3f2a1d1a; }
+.bank-chapter { margin-top: 28px; }
+.bank-chapter h2 { font: 700 22px/1.4 var(--font-serif); margin-bottom: 6px; }
+.bank-actions { display: flex; gap: 12px; flex-wrap: wrap; margin: 6px 0 18px; }
+.bank-btn { display: inline-block; background: var(--button); color: var(--bg); padding: 11px 20px; border-radius: 6px; text-decoration: none; }
+.bank-btn-ghost { background: none; color: var(--ink); border: 1px solid var(--accent); }
+@media (max-width: 600px) { .bank-viewer { height: 70vh; min-height: 360px; } }
+@media (prefers-reduced-motion: reduce) { .bank-course-card { transition: none; } }

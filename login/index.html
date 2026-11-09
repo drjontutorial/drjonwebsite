@@ -1,3 +1,72 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Student Login | Dr Jon Tutoring</title><link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/notes-solutions/solutions.css"></head>
-<body class="solutions-page"><header class="solutions-footer"><a href="/">Dr Jon Tutoring</a><a href="mailto:drjon@drjontutorial.com">Contact Dr Jon</a></header><main class="bank-gate"><p class="solutions-eyebrow">DR JON'S NOTES</p><h1>Student Login</h1><p>The Solution Bank is moving to individual student accounts.</p><p>Student sign-in is not available yet. Please contact Dr Jon for your assigned solutions.</p><p><a href="/">Return to the main website &rarr;</a></p></main></body></html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Student Login | Dr Jon Tutoring</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="/notes-solutions/solutions.css">
+</head>
+<body class="solutions-page">
+<header class="solutions-footer"><a href="/">Dr Jon Tutoring</a><a href="mailto:drjon@drjontutorial.com">Contact Dr Jon</a></header>
+<main class="bank-gate">
+  <p class="solutions-eyebrow">DR JON'S NOTES</p>
+  <h1>Student Login</h1>
+  <p>Sign in with the student code and password Dr Jon gave you to see your assigned worked solutions.</p>
+  <form id="bank-login" autocomplete="on">
+    <label for="bank-code">Student code</label>
+    <input id="bank-code" class="bank-input" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+    <label for="bank-password">Password</label>
+    <input id="bank-password" class="bank-input" type="password" autocomplete="current-password" required>
+    <label class="bank-remember"><input id="bank-remember" type="checkbox"> Remember me on this device</label>
+    <button type="submit">Sign in &rarr;</button>
+    <p id="bank-error" role="alert"></p>
+  </form>
+</main>
+<footer class="solutions-footer"><a href="/index.html">Dr Jon Tutoring</a><a href="mailto:drjon@drjontutorial.com">drjon@drjontutorial.com</a></footer>
+<script>
+"use strict";
+(function () {
+  var DB = "https://tmua-esat-homework-default-rtdb.firebaseio.com/esatTmuaGate7f2Kx9Lw/solutionBank";
+  var KEY = "drjonBankSession";
+  var form = document.getElementById("bank-login");
+  var err = document.getElementById("bank-error");
+  var btn = form.querySelector("button");
+
+  function nextUrl() {
+    var n = new URLSearchParams(location.search).get("next") || "";
+    // only allow returning inside the Solution Bank
+    return /^\/notes-solutions\/[A-Za-z0-9\-\/]*$/.test(n) ? n : "/notes-solutions/";
+  }
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    err.textContent = "";
+    var code = document.getElementById("bank-code").value.trim().toLowerCase();
+    var pwd = document.getElementById("bank-password").value;
+    if (!code || !pwd) { err.textContent = "Please enter your student code and password."; return; }
+    btn.disabled = true;
+    try {
+      var r = await fetch(DB + "/students/" + encodeURIComponent(code) + ".json", { cache: "no-store" });
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      var s = await r.json();
+      if (!s || s.password !== pwd) { err.textContent = "Incorrect student code or password."; btn.disabled = false; return; }
+      if (s.active === false) { err.textContent = "This account is not active. Please contact Dr Jon."; btn.disabled = false; return; }
+      var data = JSON.stringify({ code: code, password: pwd });
+      try {
+        sessionStorage.setItem(KEY, data);
+        if (document.getElementById("bank-remember").checked) localStorage.setItem(KEY, data);
+        else localStorage.removeItem(KEY);
+      } catch (x) {}
+      location.replace(nextUrl());
+    } catch (x) {
+      err.textContent = "Could not connect. Please check your internet connection and try again.";
+      btn.disabled = false;
+    }
+  });
+})();
+</script>
+</body>
+</html>

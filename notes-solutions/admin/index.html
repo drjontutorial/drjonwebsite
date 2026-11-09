@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Solution Bank Admin | Dr Jon Tutoring</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="/notes-solutions/solutions.css">
+<style>
+.adm { width: min(1100px, calc(100% - 40px)); margin: 32px auto 64px; }
+.adm h1 { font: 700 32px/1.3 var(--font-serif); }
+.adm-cols { display: grid; grid-template-columns: 300px 1fr; gap: 24px; margin-top: 20px; }
+@media (max-width: 800px) { .adm-cols { grid-template-columns: 1fr; } }
+.adm-card { background: var(--bg-warm); border: 1px solid #b8926355; padding: 18px; }
+.adm-list button { display: block; width: 100%; text-align: left; background: #fbf7ef; border: 1px solid #b8926355; padding: 10px 12px; margin-bottom: 6px; cursor: pointer; font: inherit; }
+.adm-list button.on { border-color: var(--ink); font-weight: 700; }
+.adm-list small { color: var(--muted); }
+.adm label { display: block; margin-top: 12px; font-size: 14px; }
+.adm input[type=text] { width: 100%; padding: 10px; margin-top: 4px; border: 1px solid var(--accent); border-radius: 5px; font: inherit; box-sizing: border-box; }
+.adm-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+.adm-btn { background: var(--button); color: var(--bg); border: 0; padding: 10px 18px; border-radius: 6px; cursor: pointer; font: inherit; }
+.adm-btn.ghost { background: none; color: var(--ink); border: 1px solid var(--accent); }
+.adm-btn.danger { background: #9b3226; }
+.adm details { border: 1px solid #b8926355; background: #fbf7ef; margin-top: 10px; padding: 8px 12px; }
+.adm summary { cursor: pointer; font-weight: 700; }
+.adm-ch { margin: 8px 0 4px 6px; font-weight: 700; font-size: 14px; }
+.adm-ex { display: inline-flex !important; align-items: center; gap: 6px; margin: 4px 14px 4px 6px !important; font-size: 14px; }
+.adm-msg { margin-top: 12px; font-weight: 700; }
+.adm-note { font-size: 13px; color: var(--muted); line-height: 1.6; }
+</style>
+</head>
+<body class="solutions-page">
+<main class="adm">
+  <p class="solutions-eyebrow">DR JON'S NOTES</p>
+  <h1>Solution Bank — Students</h1>
+  <p class="adm-note">Create student accounts and tick which exercises each student can see. Students sign in at <strong>drjontutorial.com/login</strong>. Changes take effect the next time the student opens a page.</p>
+  <div class="adm-cols">
+    <div class="adm-card">
+      <button class="adm-btn" style="width:100%" onclick="newStudent()">+ New student</button>
+      <div class="adm-list" id="list" style="margin-top:12px">Loading…</div>
+    </div>
+    <div class="adm-card" id="editor"><p>Select a student, or create a new one.</p></div>
+  </div>
+</main>
+<script>
+"use strict";
+const DB = "https://tmua-esat-homework-default-rtdb.firebaseio.com/esatTmuaGate7f2Kx9Lw/solutionBank";
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+let students = {}, catalog = { courses: [] }, current = null;
+
+async function api(path, method, body) {
+  const r = await fetch(DB + path + ".json", { method: method || "GET", cache: "no-store", body: body === undefined ? undefined : JSON.stringify(body) });
+  if (!r.ok) throw new Error("HTTP " + r.status);
+  return r.json();
+}
+
+async function load() {
+  [students, catalog] = await Promise.all([api("/students"), api("/catalog")]);
+  students = students || {}; catalog = catalog || { courses: [] };
+  renderList();
+}
+
+function countAccess(s) {
+  let n = 0; Object.values(s.access || {}).forEach(c => n += Object.values(c || {}).filter(Boolean).length); return n;
+}
+
+function renderList() {
+  const codes = Object.keys(students).sort((a, b) => (students[a].name || a).localeCompare(students[b].name || b));
+  document.getElementById("list").innerHTML = codes.length ? codes.map(c => {
+    const s = students[c];
+    return '<button class="' + (c === current ? 'on' : '') + '" onclick="edit(\'' + esc(c) + '\')">' + esc(s.name || c)
+      + '<br><small>' + esc(c) + ' · ' + countAccess(s) + ' exercises' + (s.active === false ? ' · inactive' : '') + '</small></button>';
+  }).join("") : '<p class="adm-note">No students yet.</p>';
+}
+
+function newStudent() { current = null; renderEditor(null, { name: "", password: "", active: true, access: {} }); renderList(); }
+function edit(code) { current = code; renderEditor(code, students[code]); renderList(); }
+
+function renderEditor(code, s) {
+  let html = '<h2 style="font:700 22px/1.4 var(--font-serif)">' + (code ? esc(s.name || code) : 'New student') + '</h2>'
+    + '<label>Student code (used to sign in; letters, numbers, - only)<input type="text" id="f-code" value="' + esc(code || "") + '"' + (code ? ' disabled' : '') + '></label>'
+    + '<label>Name<input type="text" id="f-name" value="' + esc(s.name || "") + '"></label>'
+    + '<label>Password<input type="text" id="f-pwd" value="' + esc(s.password || "") + '"></label>'
+    + '<label class="adm-ex"><input type="checkbox" id="f-active"' + (s.active === false ? '' : ' checked') + '> Account active</label>'
+    + '<h3 style="margin-top:18px">Assigned solutions</h3>';
+  (catalog.courses || []).forEach(c => {
+    if (!c) return;
+    html += '<details><summary>' + esc(c.title) + ' <small>(' + esc(c.board || "") + ')</small></summary>'
+      + '<div class="adm-row" style="margin-top:6px"><button type="button" class="adm-btn ghost" onclick="tickCourse(\'' + esc(c.slug) + '\',true)">Select all</button>'
+      + '<button type="button" class="adm-btn ghost" onclick="tickCourse(\'' + esc(c.slug) + '\',false)">Clear</button></div>';
+    (c.chapters || []).forEach(ch => {
+      if (!ch) return;
+      html += '<div class="adm-ch">' + esc(ch.title) + '</div>';
+      (ch.exercises || []).forEach(e => {
+        if (!e) return;
+        const on = s.access && s.access[c.slug] && s.access[c.slug][e.slug];
+        html += '<label class="adm-ex"><input type="checkbox" class="acc" data-c="' + esc(c.slug) + '" data-e="' + esc(e.slug) + '"' + (on ? ' checked' : '') + '> ' + esc(e.title) + '</label>';
+      });
+    });
+    html += '</details>';
+  });
+  html += '<div class="adm-row"><button class="adm-btn" onclick="save()">Save</button>'
+    + (code ? '<button class="adm-btn danger" onclick="removeStudent()">Delete student</button>' : '') + '</div><p class="adm-msg" id="msg"></p>';
+  document.getElementById("editor").innerHTML = html;
+}
+
+function tickCourse(slug, v) { document.querySelectorAll('.acc[data-c="' + slug + '"]').forEach(b => b.checked = v); }
+
+async function save() {
+  const msg = document.getElementById("msg");
+  const code = (current || document.getElementById("f-code").value).trim().toLowerCase();
+  if (!/^[a-z0-9-]+$/.test(code)) { msg.textContent = "Student code: letters, numbers and - only."; return; }
+  if (!current && students[code]) { msg.textContent = "That code already exists."; return; }
+  const pwd = document.getElementById("f-pwd").value;
+  if (!pwd) { msg.textContent = "Please set a password."; return; }
+  const access = {};
+  document.querySelectorAll(".acc:checked").forEach(b => { (access[b.dataset.c] = access[b.dataset.c] || {})[b.dataset.e] = true; });
+  const rec = { name: document.getElementById("f-name").value.trim(), password: pwd, active: document.getElementById("f-active").checked, access };
+  try {
+    await api("/students/" + encodeURIComponent(code), "PUT", rec);
+    students[code] = rec; current = code; renderList(); renderEditor(code, rec);
+    document.getElementById("msg").textContent = "✅ Saved.";
+  } catch (e) { msg.textContent = "Could not save: " + e.message; }
+}
+
+async function removeStudent() {
+  if (!current || !confirm("Delete " + current + "? They will no longer be able to sign in.")) return;
+  try {
+    await api("/students/" + encodeURIComponent(current), "DELETE");
+    delete students[current]; current = null; renderList();
+    document.getElementById("editor").innerHTML = "<p>Deleted.</p>";
+  } catch (e) { alert("Could not delete: " + e.message); }
+}
+
+load().catch(e => { document.getElementById("list").textContent = "Could not load: " + e.message; });
+</script>
+</body>
+</html>
