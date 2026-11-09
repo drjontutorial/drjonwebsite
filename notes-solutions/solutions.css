@@ -50,3 +50,19 @@
 .bank-btn-ghost { background: none; color: var(--ink); border: 1px solid var(--accent); }
 @media (max-width: 600px) { .bank-viewer { height: 70vh; min-height: 360px; } }
 @media (prefers-reduced-motion: reduce) { .bank-course-card { transition: none; } }
+/* PMT-style navigation */
+.bank-lead { line-height: 1.8; max-width: 680px; }
+.bank-subject { margin-top: 34px; }
+.bank-subject-title { font: 700 13px/1.6 var(--font-sans, inherit); letter-spacing: .12em; text-transform: uppercase; color: var(--accent-dark, var(--ink-soft)); padding-bottom: 8px; border-bottom: 2px solid var(--accent); margin-bottom: 16px; }
+.bank-tile-grid, .bank-ex-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.bank-tile { display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; padding: 18px; background: linear-gradient(145deg, #f3ecdf, var(--bg-warm)); border: 1px solid #b8926355; color: var(--ink); text-decoration: none; transition: transform .15s ease, box-shadow .15s ease; }
+.bank-tile:hover, .bank-ex-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px #3f2a1d1a; }
+.bank-tile-title { font: 700 19px/1.35 var(--font-serif); }
+.bank-tile-meta { font-size: 12px; color: var(--muted); margin-top: 14px; }
+.bank-chapter-card { margin-top: 26px; padding: 20px; background: var(--bg-warm); border: 1px solid #b8926355; }
+.bank-chapter-card h2 { font: 700 21px/1.4 var(--font-serif); margin: 0 0 14px; }
+.bank-ex-btn { display: block; text-align: center; padding: 14px 10px; background: var(--bg); border: 1px solid var(--accent); color: var(--ink); text-decoration: none; font-weight: 700; font-size: 15px; transition: transform .15s ease, box-shadow .15s ease; }
+.bank-ex-btn:visited { color: var(--ink-soft); }
+@media (max-width: 1000px) { .bank-tile-grid, .bank-ex-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 420px) { .bank-tile-grid { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .bank-tile, .bank-ex-btn { transition: none; } }

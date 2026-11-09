@@ -60,31 +60,43 @@
       + '<button type="button" class="bank-logout" onclick="bankLogout()">Log out</button></div>';
   }
 
+  // PMT-style navigation: subject groups -> course -> chapter cards, each
+  // chapter showing its exercises as a grid of buttons.
   function renderHome(student, courses) {
     let html = topBar(student) + '<p class="solutions-eyebrow">DR JON\'S NOTES</p><h1>Solution Bank</h1>';
     if (!courses.length) {
       return html + '<p>No solutions have been assigned to you yet. Please contact Dr Jon.</p>';
     }
-    html += '<p>Your assigned worked solutions. Try each question first, then use these to check.</p><div class="solutions-grid bank-course-grid">';
+    html += '<p class="bank-lead">Choose your course. Try each question first, then use the worked solutions to check.</p>';
+    const groups = [];
     courses.forEach(c => {
-      const n = c.chapters.reduce((s, ch) => s + ch.exercises.length, 0);
-      html += '<a class="solutions-course bank-course-card" href="/notes-solutions/' + esc(c.slug) + '/">'
-        + '<p class="solutions-eyebrow">' + esc(c.board || "") + '</p><h2>' + esc(c.title) + '</h2>'
-        + '<span class="solutions-status">' + n + ' exercise' + (n === 1 ? '' : 's') + ' &rarr;</span></a>';
+      const key = c.board || "Courses";
+      let g = groups.find(x => x.key === key);
+      if (!g) groups.push(g = { key, courses: [] });
+      g.courses.push(c);
     });
-    return html + '</div>';
+    groups.forEach(g => {
+      html += '<section class="bank-subject"><h2 class="bank-subject-title">' + esc(g.key) + '</h2><div class="bank-tile-grid">';
+      g.courses.forEach(c => {
+        const nCh = c.chapters.length, nEx = c.chapters.reduce((n, ch) => n + ch.exercises.length, 0);
+        html += '<a class="bank-tile" href="/notes-solutions/' + esc(c.slug) + '/"><span class="bank-tile-title">' + esc(c.title) + '</span>'
+          + '<span class="bank-tile-meta">' + nCh + ' chapter' + (nCh === 1 ? '' : 's') + ' &middot; ' + nEx + ' exercise' + (nEx === 1 ? '' : 's') + '</span></a>';
+      });
+      html += '</div></section>';
+    });
+    return html;
   }
 
   function renderCourse(student, course) {
     let html = topBar(student)
       + '<nav class="bank-crumbs"><a href="/notes-solutions/">Solution Bank</a> &rsaquo; ' + esc(course.title) + '</nav>'
-      + '<h1>' + esc(course.title) + '</h1>';
+      + '<p class="solutions-eyebrow">' + esc(course.board || "") + '</p><h1>' + esc(course.title) + '</h1>';
     course.chapters.forEach(ch => {
-      html += '<section class="bank-chapter"><h2>' + esc(ch.title) + '</h2><ul class="bank-exercises">';
+      html += '<section class="bank-chapter-card"><h2>' + esc(ch.title) + '</h2><div class="bank-ex-grid">';
       ch.exercises.forEach(e => {
-        html += '<li><a href="/notes-solutions/' + esc(course.slug) + '/' + esc(e.slug) + '/">' + esc(e.title) + '</a></li>';
+        html += '<a class="bank-ex-btn" href="/notes-solutions/' + esc(course.slug) + '/' + esc(e.slug) + '/">' + esc(e.title) + '</a>';
       });
-      html += '</ul></section>';
+      html += '</div></section>';
     });
     return html;
   }
