@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex, follow">
 <title>Dr Jon's Notes — Solution Bank</title>
+<script>
+// Printed AS Maths Pure QR codes use /notes-solutions/maths-pure/<ex>/ but those
+// exercises live under /notes-solutions/maths-pure-as/<ex>/. GitHub Pages serves
+// this file only when no page exists at the requested path, so existing
+// maths-pure pages are never affected. The target page handles login.
+(function () {
+  var m = location.pathname.match(/^\/notes-solutions\/maths-pure\/([a-z0-9-]+)\/?$/);
+  if (m) location.replace("/notes-solutions/maths-pure-as/" + m[1] + "/" + location.search + location.hash);
+})();
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/styles.css">
 <link rel="stylesheet" href="/notes-solutions/solutions.css">
