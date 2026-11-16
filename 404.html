@@ -13,6 +13,10 @@
 (function () {
   var m = location.pathname.match(/^\/notes-solutions\/maths-pure\/([a-z0-9-]+)\/?$/);
   if (m) location.replace("/notes-solutions/maths-pure-as/" + m[1] + "/" + location.search + location.hash);
+  // Printed AS Physics QR codes use /notes-solutions/a-level-physics/<ex>/ but those
+  // exercises live under /notes-solutions/as-physics/<ex>/.
+  var p = location.pathname.match(/^\/notes-solutions\/a-level-physics\/([a-z0-9-]+)\/?$/);
+  if (p) location.replace("/notes-solutions/as-physics/" + p[1] + "/" + location.search + location.hash);
 })();
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
